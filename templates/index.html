@@ -19,7 +19,7 @@
 {% if short_url %}
     <hr>
     <p>Short URL:</p>
-    <a href="{{ short_url }}">{{ short_url }}</a>
+<p><strong>Short URL:</strong> <a href="{{ short_url.get_short_url }}">{{ short_url.short_code }}</a></p>
 {% endif %}
 
                     </div>
