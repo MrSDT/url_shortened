@@ -59,19 +59,14 @@ def generate_short_code():
 
 
 def shorten_url(request):
-    """
-    Shorten a URL and save it to the database
-    """
     if request.method == 'POST':
         form = ShortURLForm(request.POST)
         if form.is_valid():
             url = form.cleaned_data['url']
-            short_code = generate_short_code()
-            short_url = ShortURL(original_url=url, short_code=short_code)
+            short_url = ShortURL(original_url=url)
             short_url.save()
-            short_url_url = reverse('short_url_created', args=[short_code])
-            return redirect(short_url_url)
+            return render(request, 'shortened.html', {'short_url': short_url})
     else:
         form = ShortURLForm()
 
-    return render(request, 'index.html', {'form': form, 'title': 'URL Shortener'})
+    return render(request, 'index.html', {'form': form})
