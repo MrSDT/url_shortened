@@ -31,7 +31,7 @@ def short_url_created(request, short_code):
 
 def shorten_url(request):
     """
-    Shorten a URL and return the shortened URL
+    Shorten URL and create new ShortURL object
     """
     if request.method == 'POST':
         form = ShortURLForm(request.POST)
@@ -39,7 +39,8 @@ def shorten_url(request):
             url = form.cleaned_data['url']
             short_url = ShortURL(original_url=url)
             short_url.save()
-            short_url.short_code = generate_short_code()
+            short_code = str(short_url.id)
+            short_url.short_code = short_code
             short_url.save()
             return render(request, 'shortened.html', {'short_url': short_url})
     else:
