@@ -8,7 +8,7 @@
                     <div class="card-header">{{ title }}</div>
 
                     <div class="card-body">
-<form method="POST" action="{% url 'shortener:shorten_url' %}">
+<form method="post" action="{% url 'shortener:shorten_url' %}">
     {% csrf_token %}
     <div class="form-group">
         <label for="url">Enter URL</label>
