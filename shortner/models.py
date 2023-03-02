@@ -13,11 +13,9 @@ def generate_short_code():
 
 
 class ShortURL(models.Model):
-    """
-    Model for storing original and short URLs
-    """
-    original_url = models.URLField(max_length=500)
-    short_code = models.CharField(max_length=6, unique=True)
+    original_url = models.URLField()
+    short_code = models.CharField(max_length=15, unique=True)
+    num_clicks = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         """
@@ -33,10 +31,7 @@ class ShortURL(models.Model):
         return self.short_code
 
     def get_short_url(self):
-        """
-        Return the shortened URL
-        """
-        return 'http://localhost:8000/' + self.short_code
+        return f'http://127.0.0.1:8000/{self.short_code}'
 
     def get_stats_url(self):
         """
