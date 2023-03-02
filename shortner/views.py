@@ -15,7 +15,7 @@ def index(request):
             url = form.cleaned_data['url']
             short_url = ShortURL(original_url=url)
             short_url.save()
-            return redirect(reverse('shorten_url_created', args=[short_url.short_code]))
+            return redirect(reverse('shortener:shorten_url_created', args=[short_url.short_code]))
     else:
         form = ShortURLForm()
 
