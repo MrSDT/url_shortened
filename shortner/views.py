@@ -43,6 +43,7 @@ def shorten_url(request):
             url = form.cleaned_data['url']
             short_url = ShortURL(original_url=url)
             short_url.save()
+            return redirect(reverse('stats', kwargs={'short_code': short_url.short_code}))
 
     form = ShortURLForm()
     return render(request, 'shorten.html', {'form': form, 'short_url': short_url})
