@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>URL Shortener - Stats</title>
-</head>
-<body>
-  <h1>URL Shortener</h1>
-  <p>Original URL: {{ short_url.original_url }}</p>
-  <p>Shortened URL: <a href="{{ short_url.get_short_url }}">{{ short_url.get_short_url }}</a></p>
-  <p>Number of clicks: {{ short_url.num_clicks }}</p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Original URL: <a href="{{ short_url.original_url }}">{{ short_url.original_url }}</a></h2>
+    <h2>Short URL: <a href="{{ short_url.get_short_url }}">{{ short_url.get_short_url }}</a></h2>
+    <h2>Number of Clicks: {{ short_url.num_clicks }}</h2>
+{% endblock %}
