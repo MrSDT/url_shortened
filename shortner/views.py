@@ -12,7 +12,7 @@ def index(request):
     if request.method == 'POST':
         form = ShortURLForm(request.POST)
         if form.is_valid():
-            url = form.cleaned_data['url']
+            url = form.cleaned_data['original_url']
             short_url = ShortURL(original_url=url)
             short_url.save()
             return redirect(reverse('shortener:shorten_url_created', args=[short_url.short_code]))
