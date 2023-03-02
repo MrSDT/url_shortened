@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from .forms import ShortURLForm
@@ -26,10 +27,14 @@ def redirect_original(request, short_code):
     """
     Redirect to original URL based on short code
     """
-    short_url = get_object_or_404(ShortURL, short_code=short_code)
-    short_url.num_clicks += 1
-    short_url.save()
-    return redirect(short_url.original_url)
+    try:
+        short_url = ShortURL.objects.get(short_code=short_code)
+        short_url.num_clicks += 1
+        short_url.save()
+        return redirect(short_url.original_url)
+    except ShortURL.DoesNotExist:
+        raise Http404("ShortURL does not exist")
+
 
 
 def short_url_created(request, short_code):
