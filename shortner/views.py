@@ -1,5 +1,4 @@
-from django.shortcuts import render, redirect
-from .utils import generate_random_code
+from django.shortcuts import render
 from .forms import ShortURLForm
 from .models import ShortURL
 
@@ -15,25 +14,11 @@ def index(request):
             url = form.cleaned_data['url']
             short_url = ShortURL(original_url=url)
             short_url.save()
-            return render(request, 'short_url_created.html', {'short_url': short_url})
-    else:
-        form = ShortURLForm()
-
-    return render(request, 'index.html', {'form': form, 'title': title})
-
-
-def generate_short_code(request):
-    if request.method == 'POST':
-        form = ShortURLForm(request.POST)
-        if form.is_valid():
-            url = form.cleaned_data['url']
-            short_url = ShortURL(original_url=url, short_code=generate_random_code())
-            short_url.save()
             return render(request, 'shortened.html', {'short_url': short_url})
     else:
         form = ShortURLForm()
 
-    return render(request, 'index.html', {'form': form})
+    return render(request, 'index.html', {'form': form, 'title': title})
 
 
 def short_url_created(request, short_code):
@@ -41,4 +26,24 @@ def short_url_created(request, short_code):
     Render page showing the original and shortened URLs, as well as the number of clicks
     """
     short_url = ShortURL.objects.get(short_code=short_code)
-    return render(request, 'short_url_created.html', {'short_url': short_url})
+    return render(request, 'shortened.html', {'short_url': short_url})
+
+
+def shorten_url(request):
+    """
+    Shorten a URL and return the shortened URL
+    """
+    if request.method == 'POST':
+        form = ShortURLForm(request.POST)
+        if form.is_valid():
+            url = form.cleaned_data['url']
+            short_url = ShortURL(original_url=url)
+            short_url.save()
+            short_url.short_code = generate_short_code()
+            short_url.save()
+            return render(request, 'shortened.html', {'short_url': short_url})
+    else:
+        form = ShortURLForm()
+
+    return render(request, 'index.html', {'form': form})
+
