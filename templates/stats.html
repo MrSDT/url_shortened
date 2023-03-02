@@ -3,5 +3,19 @@
 {% block content %}
     <h2>Original URL: <a href="{{ short_url.original_url }}">{{ short_url.original_url }}</a></h2>
     <h2>Short URL: <a href="{{ short_url.short_code }}">{{ short_url.short_code }}</a></h2>
+    <button id="copy-btn" class="btn btn-primary">Copy to Clipboard</button>
     <h2>Number of Clicks: {{ short_url.num_clicks }}</h2>
+
+<script>
+    function copyToClipboard() {
+        var copyText = document.getElementById("short-url");
+        copyText.select();
+        document.execCommand("copy");
+        alert("Copied to clipboard: " + copyText.value);
+    }
+
+    document.getElementById("copy-btn").addEventListener("click", copyToClipboard);
+</script>
 {% endblock %}
+
+
