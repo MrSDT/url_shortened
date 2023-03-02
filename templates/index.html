@@ -8,19 +8,21 @@
                     <div class="card-header">{{ title }}</div>
 
                     <div class="card-body">
-<form method="post" action="{% url 'shortener:shorten_url' %}">
-    {% csrf_token %}
-    <div class="form-group">
-        <label for="url">Enter URL</label>
-        <input type="text" class="form-control" name="url" id="url" placeholder="https://example.com" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Shorten URL</button>
+{#<form method="post" action="{% url 'shortener:shorten_url' %}">#}
+{#    {% csrf_token %}#}
+{#    <div class="form-group">#}
+{#        <label for="url">Enter URL</label>#}
+{#        <input type="text" class="form-control" name="url" id="url" placeholder="https://example.com" required>#}
+{#    </div>#}
+{#    <button type="submit" class="btn btn-primary">Shorten URL</button>#}
+{#</form>#}
+
+                        <form method="post" class="form-inline" id="url-form">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary" id="shorten-url-btn">Shorten URL</button>
 </form>
-{% if short_url %}
-    <hr>
-    <p>Short URL:</p>
-<p><strong>Short URL:</strong> <a href="{{ short_url.get_short_url }}">{{ short_url.short_code }}</a></p>
-{% endif %}
+
 
                     </div>
                 </div>

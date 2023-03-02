@@ -7,5 +7,5 @@ class ShortURLForm(forms.ModelForm):
         model = ShortURL
         fields = ['original_url']
         widgets = {
-            'original_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'Enter a URL to shorten'}),
+            'original_url': forms.TextInput(attrs={'placeholder': 'Paste a long URL to shorten it', 'class': 'form-control'})
         }
