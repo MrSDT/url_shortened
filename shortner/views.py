@@ -8,7 +8,7 @@ def index(request):
     """
     Render index page with form for submitting URL
     """
-    title = 'URL Shortener'
+    title = 'کوتاه کننده لینک'
     if request.method == 'POST':
         form = ShortURLForm(request.POST)
         if form.is_valid():
