@@ -7,15 +7,19 @@
     <h2>Number of Clicks: {{ short_url.num_clicks }}</h2>
 
 
-    <div aria-live="polite" aria-atomic="true" class="position-fixed" style="top: 0; right: 0;">
-  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">
-    <div class="toast-header">
-      <strong class="mr-auto">Notification</strong>
-      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+
+
+<div aria-live="polite" aria-atomic="true" class="bg-body-secondary position-relative bd-example-toasts rounded-3">
+  <div class="toast-container p-3 " id="toastPlacement">
+    <div id="toast" class="toast" data-delay="2500">
+      <div class="toast-header">
+        <img src="" class="rounded me-2" alt="">
+        <strong class="me-auto">Url Copied to Clipboard</strong>
+      </div>
+      <div class="toast-body">
+{{ request.get_host }}/{{ short_url.short_code }}
+      </div>
     </div>
-    <div class="toast-body"></div>
   </div>
 </div>
 
@@ -45,23 +49,14 @@
       tempInput.remove();
 
     // Show a toast message to the user indicating that the URL has been copied to the clipboard
-        var toast = $("<div class='toast' role='alert' aria-live='assertive' aria-atomic='true' data-delay='2000'>" +
-          "<div class='toast-header'>" +
-          "<strong class='mr-auto'>URL Copied</strong>" +
-          "<button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>" +
-          "<span aria-hidden='true'>&times;</span>" +
-          "</button>" +
-          "</div>" +
-          "<div class='toast-body'>" +
-          fullUrl +
-          "</div>" +
-          "</div>");
-      $(".toast-container").append(toast);
-      $(".toast").toast('show');
+    var toast = $('#toast');
+    var bsToast = new bootstrap.Toast(toast[0]);
+    bsToast.show();
 
     });
   });
 </script>
+
 {% endblock %}
 
 
