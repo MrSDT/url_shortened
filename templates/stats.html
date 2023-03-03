@@ -2,19 +2,40 @@
 
 {% block content %}
     <h2>Original URL: <a href="{{ short_url.original_url }}">{{ short_url.original_url }}</a></h2>
-    <h2>Short URL: <a href="{{ short_url.short_code }}">{{ short_url.short_code }}</a></h2>
-    <button id="copy-btn" class="btn btn-primary">Copy to Clipboard</button>
+    <h2>Short URL: <a id="short-url" target="_blank" href="{{ request.scheme }}://{{ request.get_host }}/{{ short_url.short_code }}">{{ request.get_host }}/{{ short_url.short_code }}</a></h2>
+<button id="copy-button" class="btn btn-primary">Copy URL</button>
     <h2>Number of Clicks: {{ short_url.num_clicks }}</h2>
 
 <script>
-    function copyToClipboard() {
-        var copyText = document.getElementById("short-url");
-        copyText.select();
-        document.execCommand("copy");
-        alert("Copied to clipboard: " + copyText.value);
-    }
+  $(document).ready(function() {
+    // Get the shortened URL from the HTML element with ID "short-url"
+    var shortUrl = $('#short-url').text();
 
-    document.getElementById("copy-btn").addEventListener("click", copyToClipboard);
+    // Get the base URL of your website
+    var baseUrl = window.location.protocol + "//" + window.location.host;
+
+    // Create the full URL by appending the base URL to the shortened URL
+    var fullUrl = baseUrl + "/" + shortUrl;
+
+    // Add a click event listener to the button
+    $('#copy-button').click(function() {
+      // Create a temporary input element and append it to the body of the page
+      var tempInput = $("<input>");
+      $("body").append(tempInput);
+
+      // Set the value of the temporary input element to the full URL
+      tempInput.val(fullUrl).select();
+
+      // Copy the value of the temporary input element to the clipboard
+      document.execCommand("copy");
+
+      // Remove the temporary input element from the page
+      tempInput.remove();
+
+      // Show a message to the user indicating that the URL has been copied to the clipboard
+      alert("URL copied to clipboard: " + fullUrl);
+    });
+  });
 </script>
 {% endblock %}
 
