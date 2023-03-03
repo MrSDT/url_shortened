@@ -6,16 +6,28 @@
 <button id="copy-button" class="btn btn-primary">Copy URL</button>
     <h2>Number of Clicks: {{ short_url.num_clicks }}</h2>
 
+
+    <div aria-live="polite" aria-atomic="true" class="position-fixed" style="top: 0; right: 0;">
+  <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000">
+    <div class="toast-header">
+      <strong class="mr-auto">Notification</strong>
+      <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="toast-body"></div>
+  </div>
+</div>
+
+
+
 <script>
   $(document).ready(function() {
     // Get the shortened URL from the HTML element with ID "short-url"
     var shortUrl = $('#short-url').text();
 
-    // Get the base URL of your website
-    var baseUrl = window.location.protocol + "//" + window.location.host;
-
     // Create the full URL by appending the base URL to the shortened URL
-    var fullUrl = baseUrl + "/" + shortUrl;
+    var fullUrl = shortUrl;
 
     // Add a click event listener to the button
     $('#copy-button').click(function() {
@@ -32,8 +44,10 @@
       // Remove the temporary input element from the page
       tempInput.remove();
 
-      // Show a message to the user indicating that the URL has been copied to the clipboard
-      alert("URL copied to clipboard: " + fullUrl);
+    // Show a toast message to the user indicating that the URL has been copied to the clipboard
+    var x = document.getElementById("toast")
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
     });
   });
 </script>
